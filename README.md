@@ -4,6 +4,7 @@ Create a fork to complete the tutorial. Send us the location of your fork (make 
 Thank you!
 
 
+
 Note this was built using python 3.6+ and Django 2.2. We use the long-term stable release of Django 2.2 at CouponCabin so use that version for this project.
 
 https://docs.djangoproject.com/en/2.2/intro/overview/
