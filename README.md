@@ -50,4 +50,6 @@ Write tests for any bugs you found while running through the previous steps
 
 Add a pip requirements file for any packages (including Django) that get added to the project.
 
+Please fix any WARNINGS issued by Django while working through the project. The tutorial will start with a few warnings that need to be corrected. Everything works so the warnings will not stop you from starting the project up, but should be resolved as part of this task.
+
 Pay attention to the general rules of pep8 when coding. At CouponCabin we do not enforce rule for maximum line length: https://www.python.org/dev/peps/pep-0008/#id19 but we try to heed other pep8 rules where possible.
