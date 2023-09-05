@@ -5,9 +5,9 @@ Thank you!
 
 
 
-Note this was built using python 3.6+ and Django 2.2. We use the long-term stable release of Django 2.2 at CouponCabin so use that version for this project.
+Note this was built using python 3.10+ and Django 3.2. We use the long-term stable release of Django 3.2 at CouponCabin so use that version for this project.
 
-https://docs.djangoproject.com/en/2.2/intro/overview/
+https://docs.djangoproject.com/en/3.2/intro/overview/
 
 We've set up the basic documents for the Django tutorial including a sqlite file with the basic models set up to help get you kickstarted. It's still a good idea to read through the tutorial, but this avoids having to type everything in.
 
