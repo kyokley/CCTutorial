@@ -13,3 +13,6 @@ run: build
 
 migrate: build
 	docker run --rm -t -v $$(pwd):/code --workdir=/code/cctutorial kyokley/cc python manage.py migrate
+
+test: build
+	docker run --rm -t -v $$(pwd):/code --workdir=/code/cctutorial kyokley/cc python manage.py test

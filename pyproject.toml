@@ -12,8 +12,15 @@ black = "^23.10.0"
 isort = "^5.12.0"
 pdbpp = "^0.10.3"
 pytest-django = "^4.5.2"
+bpython = "^0.24"
+ruff = "^0.1.0"
 
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+
+[tool.ruff]
+select = ["E", "F"]
+ignore = ["E501"]
