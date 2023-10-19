@@ -54,6 +54,15 @@ def choices(request, pk=None):
     return rendered
 
 
+def _get_pub_date(pub_date):
+    # I broke this out into a helper method to make testing a little easier
+    if pub_date is None:
+        pub_date = datetime.date.today()
+    else:
+        pub_date = parser.parse(pub_date).date()
+    return pub_date
+
+
 def question(request, pub_date=None):
     """
     If a primary key is passed in, return only that choice object.
@@ -61,10 +70,7 @@ def question(request, pub_date=None):
 
     Show the related question in both instances
     """
-    if pub_date is None:
-        pub_date = datetime.date.today()
-    else:
-        pub_date = parser.parse(pub_date).date()
+    pub_date = _get_pub_date(pub_date)
 
     # I'm a little confused about the goal for this method. I'm assuming we're
     # actually interested in the questions published either before or after some
