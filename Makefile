@@ -12,6 +12,7 @@ format: build
 
 up: build
 	docker run --rm -it -d -v $$(pwd):/code -p 127.0.0.1:8000:8000 kyokley/cc
+	docker run --rm -t -v $$(pwd):/code kyokley/cc python manage.py migrate
 	docker logs --follow $$(docker ps | grep kyokley/cc | awk '{print $$1}')
 
 down:

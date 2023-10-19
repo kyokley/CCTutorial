@@ -2,13 +2,13 @@
 
 {% block body %}
     <h2>
-        Pub Date: {{ pub_date }}
+        Requested Pub Date: {{ pub_date }}
     </h2>
     <ul>
         {% if questions %}
             {% for question in questions %}
                 <li>
-                    Question: {{ question.pk }} - {{ question.question_text }}
+                    Question: {{ question.pk }} - {{ question.question_text }} Pub Date: {{ question.pub_date }}
                 </li>
             {% endfor %}
         {% else %}
