@@ -8,4 +8,5 @@ urlpatterns = [
     re_path('choices/(?P<pk>[0-9]{4})/', views.choices, name='choices'),
     path('choices/', views.choices, name='choices'),
     re_path('question/(?P<pub_date>[0-9]{4}[-/][0-9]{2}[-/][0-9]{2})/', views.question, name='question'),
+    re_path('question/', views.question, name='question'),
 ]

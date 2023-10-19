@@ -1,6 +1,7 @@
 import datetime
+from dateutil import parser
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from polls.models import Choice, Question
 
 
@@ -21,37 +22,47 @@ def most_popular_choice(request):
     return HttpResponse("")
 
 
-def choices(request, pk=14):
+def choices(request, pk=None):
     """
     If a primary key is passed in, return only that choice object.
     If no primary key is passed in, return all choices ordered by highest number of votes first.
 
     Show the related question in both instances
     """
+    questions = {}
+
     if pk:
-        choice = Choice.objects.get(pk=pk)
-        rendered = render(request, 'choices.html', {'choice': choice})
-        return rendered
+        choice = get_object_or_404(Choice, pk=pk)
+        questions = {choice.question: [choice]}
     else:
-        choices = Choice.objects.all().order_by('pk')
-        questions = []
+        choices = Choice.objects.all().order_by('pk').select_related('question')
         for choice in choices:
-            question = Question.objects.get(pk=choice.question_id)
-            questions.append(question)
-
-        rendered = render(request, 'choices.html', {'choices': choices, 'questions': questions})
-        return rendered
+            questions.setdefault(choice.question, []).append(choice)
 
 
-def question(request, pub_date=datetime.date.today()):
+    rendered = render(request, 'polls/choices.html', {'questions': questions})
+    return rendered
+
+
+def question(request, pub_date=None):
     """
     If a primary key is passed in, return only that choice object.
     If no primary key is passed in, return all choices ordered by highest number of votes first.
 
     Show the related question in both instances
     """
+    if pub_date is None:
+        pub_date = datetime.date.today()
+    else:
+        pub_date = parser.parse(pub_date).date()
 
-    questions = Question.objects.filter(pub_date=pub_date)
+    # I'm a little confused about the goal for this method. I'm assuming we're
+    # actually interested in the questions published either before or after some
+    # date. I'm going to work under the assumption we want all questions created
+    # before some date.
+    questions = Question.objects.filter(pub_date__lte=pub_date)
 
-    rendered = render(request, 'questions.html', {'questions': questions})
+    rendered = render(request,
+                      'polls/questions.html',
+                      {'questions': questions, 'pub_date': pub_date.isoformat()})
     return rendered
