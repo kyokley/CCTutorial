@@ -10,3 +10,6 @@ format: build
 
 run: build
 	docker run --rm -v $$(pwd):/code -p 127.0.0.1:8000:8000 --workdir=/code/cctutorial kyokley/cc
+
+migrate: build
+	docker run --rm -t -v $$(pwd):/code --workdir=/code/cctutorial kyokley/cc python manage.py migrate
