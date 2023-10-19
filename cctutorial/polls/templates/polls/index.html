@@ -2,13 +2,14 @@
 
 {% block body %}
     <h2>
-        Pub Date: {{ pub_date }}
+        Latest Questions:
     </h2>
+
     <ul>
         {% if questions %}
             {% for question in questions %}
                 <li>
-                    Question: {{ question.pk }} - {{ question.question_text }}
+        Question: <a href="{% url 'admin:polls_question_change' question.pk %}">{{ question.pk }} - {{ question.question_text }}</a> Pub Date: {{ question.pub_date }}
                 </li>
             {% endfor %}
         {% else %}

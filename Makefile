@@ -5,7 +5,9 @@ shell: build
 	docker run --rm -it -v $$(pwd):/code kyokley/cc /bin/bash
 
 format: build
-	docker run --rm -t -v $$(pwd):/code kyokley/cc /venv/bin/black .
+	# Normally I like to use black formatting on my code but was afraid it would
+	# add too much noise to the PR.
+	# docker run --rm -t -v $$(pwd):/code kyokley/cc /venv/bin/black .
 	docker run --rm -t -v $$(pwd):/code kyokley/cc /venv/bin/isort .
 
 run: build

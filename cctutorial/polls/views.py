@@ -6,9 +6,9 @@ from polls.models import Choice, Question
 
 
 def index(request):
-    latest_question_list = Question.objects.only('question_text').order_by('-pub_date')[:5]
-    output = ', '.join([p.question_text for p in latest_question_list])
-    return HttpResponse(output)
+    latest_question_qs = Question.objects.only('pk', 'pub_date', 'question_text').order_by('-pub_date')[:5]
+    rendered = render(request, 'polls/index.html', {'questions': latest_question_qs})
+    return rendered
 
 
 def most_popular_choice(request):
