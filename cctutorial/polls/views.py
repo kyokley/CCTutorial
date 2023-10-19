@@ -1,6 +1,6 @@
 import datetime
 from django.http import HttpResponse
-from django.template.loader import render_to_string
+from django.shortcuts import render
 from polls.models import Choice, Question
 
 
@@ -30,8 +30,8 @@ def choices(request, pk=14):
     """
     if pk:
         choice = Choice.objects.get(pk=pk)
-        rendered = render_to_string('choices.html', {'choice': choice})
-        return HttpResponse(rendered)
+        rendered = render(request, 'choices.html', {'choice': choice})
+        return rendered
     else:
         choices = Choice.objects.all().order_by('pk')
         questions = []
@@ -39,8 +39,8 @@ def choices(request, pk=14):
             question = Question.objects.get(pk=choice.question_id)
             questions.append(question)
 
-        rendered = render_to_string('choices.html', {'choices': choices, 'questions': questions})
-        return HttpResponse(rendered)
+        rendered = render(request, 'choices.html', {'choices': choices, 'questions': questions})
+        return rendered
 
 
 def question(request, pub_date=datetime.date.today()):
@@ -53,5 +53,5 @@ def question(request, pub_date=datetime.date.today()):
 
     questions = Question.objects.filter(pub_date=pub_date)
 
-    rendered = render_to_string('questions.html', {'questions': questions})
-    return HttpResponse(rendered)
+    rendered = render(request, 'questions.html', {'questions': questions})
+    return rendered
