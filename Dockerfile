@@ -7,7 +7,7 @@ ENV PYTHONUNBUFFERED 1
 
 WORKDIR /code
 
-RUN apt-get update && apt-get install make
+RUN apt-get update && apt-get install -y g++
 
 RUN pip install -U pip
 
