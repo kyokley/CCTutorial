@@ -25,4 +25,6 @@ COPY poetry.lock pyproject.toml /code/
 
 RUN $POETRY_VENV/bin/poetry install
 
+WORKDIR /code/cctutorial
+
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]

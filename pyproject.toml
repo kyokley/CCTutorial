@@ -17,6 +17,11 @@ ruff = "^0.1.0"
 python-dateutil = "^2.8.2"
 
 
+[tool.poetry.group.dev.dependencies]
+faker = "^19.11.0"
+pytest-django = "^4.5.2"
+pytest-mock = "^3.12.0"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
@@ -25,3 +30,7 @@ build-backend = "poetry.core.masonry.api"
 [tool.ruff]
 select = ["E", "F"]
 ignore = ["E501"]
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "cctutorial.settings"
+python_files = ["test_*.py", "*_test.py", "tests.py"]

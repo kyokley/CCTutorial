@@ -11,7 +11,7 @@ format: build
 	docker run --rm -t -v $$(pwd):/code kyokley/cc /venv/bin/isort .
 
 up: build
-	docker run --rm -it -d -v $$(pwd):/code -p 127.0.0.1:8000:8000 --workdir=/code/cctutorial kyokley/cc
+	docker run --rm -it -d -v $$(pwd):/code -p 127.0.0.1:8000:8000 kyokley/cc
 	docker logs --follow $$(docker ps | grep kyokley/cc | awk '{print $$1}')
 
 down:
@@ -24,7 +24,7 @@ logs:
 	docker logs --follow $$(docker ps | grep kyokley/cc | awk '{print $$1}')
 
 migrate: build
-	docker run --rm -t -v $$(pwd):/code --workdir=/code/cctutorial kyokley/cc python manage.py migrate
+	docker run --rm -t -v $$(pwd):/code kyokley/cc python manage.py migrate
 
 test: build
-	docker run --rm -t -v $$(pwd):/code --workdir=/code/cctutorial kyokley/cc python manage.py test
+	docker run --rm -t -v $$(pwd):/code kyokley/cc pytest
