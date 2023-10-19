@@ -1,6 +1,9 @@
 {% extends "polls/base.html" %}
 
 {% block body %}
+    <h2>
+        {{ header }}
+    </h2>
     <ul>
         {% if questions %}
             {% for question, choices in questions.items %}

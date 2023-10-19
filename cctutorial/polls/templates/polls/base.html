@@ -3,6 +3,11 @@
         <title>CC Tutorial</title>
     </head>
     <body>
+        <a href="{% url 'admin:index' %}">Admin</a>
+        <a href="{% url 'polls:index' %}">Polls</a>
+        <a href="{% url 'polls:choices' %}">Choices</a>
+        <a href="{% url 'polls:most-popular-choice' %}">Most Popular Choice</a>
+
         {% block body %}
         {% endblock %}
     </body>

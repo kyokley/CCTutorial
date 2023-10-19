@@ -1,6 +1,5 @@
 import datetime
 from dateutil import parser
-from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from polls.models import Choice, Question
 
@@ -19,7 +18,15 @@ def most_popular_choice(request):
     the choice, display the choice_text, number of votes and
     related Question id in the response below.
     """
-    return HttpResponse("")
+    questions = {}
+    max_votes_qs = Choice.objects.order_by('-votes').values('votes')[:1]
+    choices = Choice.objects.filter(votes=max_votes_qs).select_related('question')
+    for choice in choices:
+        questions.setdefault(choice.question, []).append(choice)
+
+    rendered = render(request, 'polls/choices.html', {'questions': questions,
+                                                      'header': 'Most Popular Choice(s):'})
+    return rendered
 
 
 def choices(request, pk=None):
@@ -34,13 +41,16 @@ def choices(request, pk=None):
     if pk:
         choice = get_object_or_404(Choice, pk=pk)
         questions = {choice.question: [choice]}
+        header = f'Choice #{choice.pk}'
     else:
         choices = Choice.objects.all().order_by('pk').select_related('question')
+        header = 'All Choices:'
         for choice in choices:
             questions.setdefault(choice.question, []).append(choice)
 
 
-    rendered = render(request, 'polls/choices.html', {'questions': questions})
+    rendered = render(request, 'polls/choices.html', {'questions': questions,
+                                                      'header': header})
     return rendered
 
 
