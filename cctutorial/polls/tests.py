@@ -199,7 +199,7 @@ class TestQuestion(SeedDataBase):
     @pytest.fixture(autouse=True)
     def setUp(self, mocker):
         self.render_spy = mocker.spy(views, 'render')
-        self.url_name = 'polls:question'
+        self.url_name = 'polls:questions'
 
     def test_empty(self, client):
         Question.objects.all().delete()
