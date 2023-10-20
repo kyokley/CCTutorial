@@ -8,7 +8,10 @@ def index(request):
     latest_question_qs = Question.objects.only('pk',
                                                'pub_date',
                                                'question_text').order_by('-pub_date')[:5]
-    rendered = render(request, 'polls/index.html', {'questions': latest_question_qs})
+    rendered = render(request,
+                      'polls/index.html',
+                      {'questions': latest_question_qs,
+                       'header': 'Latest Questions:'})
     return rendered
 
 
@@ -79,5 +82,6 @@ def questions(request, pub_date=None):
 
     rendered = render(request,
                       'polls/questions.html',
-                      {'questions': questions, 'pub_date': pub_date.isoformat()})
+                      {'questions': questions,
+                       'header': f'Requested Pub Date: {pub_date.isoformat()}'})
     return rendered

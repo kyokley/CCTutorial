@@ -1,9 +1,6 @@
 {% extends "polls/base.html" %}
 
 {% block body %}
-    <h2>
-        Requested Pub Date: {{ pub_date }}
-    </h2>
     <ul>
         {% if questions %}
             {% for question in questions %}
