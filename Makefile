@@ -1,14 +1,16 @@
+.PHONY: attach build down format logs migrate shell tests up
+
 build:
 	docker build -t kyokley/cc .
 
 shell: build
 	docker run --rm -it -v $$(pwd):/code kyokley/cc /bin/bash
 
-format: build
-	# Normally I like to use black formatting on my code but was afraid it would
+# format: build
+	# Normally I like to use black formatting isort on my code but was afraid it would
 	# add too much noise to the PR.
 	# docker run --rm -t -v $$(pwd):/code kyokley/cc /venv/bin/black .
-	docker run --rm -t -v $$(pwd):/code kyokley/cc /venv/bin/isort .
+	# docker run --rm -t -v $$(pwd):/code kyokley/cc /venv/bin/isort .
 
 up: build
 	docker run --rm -it -d -v $$(pwd):/code -p 127.0.0.1:8000:8000 kyokley/cc
@@ -27,5 +29,5 @@ logs:
 migrate: build
 	docker run --rm -t -v $$(pwd):/code kyokley/cc python manage.py migrate
 
-test: build
+tests: build
 	docker run --rm -t -v $$(pwd):/code kyokley/cc pytest

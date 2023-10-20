@@ -1,3 +1,20 @@
+## Notes
+I implemented my solution using Docker containers so the best way to run it is through the Make commands. Of note are the following commands:
+
+To bring up the server, run:
+```
+make up
+```
+This will make the server available on 127.0.0.1:8000.
+
+To run tests, run:
+```
+make tests
+```
+
+I believe I was able to attempt all of the tasks outlined below except for the one about restricting users to one vote per day. Without taking the next step of adding forms to the various templates, it felt like there was a lot of variability in what an implementation could look like. At a high level though, I would create a solution that assigns some kind of unique identifier to the user's session and track that against each Question and when the vote occurred.
+
+
 FORK ME
 Create a fork to complete the tutorial. Send us the location of your fork (make sure your fork is not private when submitting your work) so we can download, run and review.
 
@@ -11,7 +28,7 @@ https://docs.djangoproject.com/en/3.2/intro/overview/
 
 We've set up the basic documents for the Django tutorial including a sqlite file with the basic models set up to help get you kickstarted. It's still a good idea to read through the tutorial, but this avoids having to type everything in.
 
-The admin is also set up and the admin username and password are both: admin 
+The admin is also set up and the admin username and password are both: admin
 Kind of boring but very easy to remember.
 
 There are some bugs that we'll need you to fix as well as some new features to add.
