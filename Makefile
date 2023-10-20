@@ -15,16 +15,16 @@ shell: build
 up: build
 	docker run --rm -it -d -v $$(pwd):/code -p 127.0.0.1:8000:8000 kyokley/cc
 	docker run --rm -t -v $$(pwd):/code kyokley/cc python manage.py migrate
-	docker logs --follow $$(docker ps | grep kyokley/cc | awk '{print $$1}')
+	docker ps | grep kyokley/cc | awk '{print $$1}' | xargs -r docker logs --follow
 
 down:
-	docker stop $$(docker ps | grep kyokley/cc | awk '{print $$1}')
+	docker ps | grep kyokley/cc | awk '{print $$1}' | xargs -r docker stop
 
 attach:
-	docker attach $$(docker ps | grep kyokley/cc | awk '{print $$1}')
+	docker ps | grep kyokley/cc | awk '{print $$1}' | xargs -r docker attach
 
 logs:
-	docker logs --follow $$(docker ps | grep kyokley/cc | awk '{print $$1}')
+	docker ps | grep kyokley/cc | awk '{print $$1}' | xargs -r docker logs --follow
 
 migrate: build
 	docker run --rm -t -v $$(pwd):/code kyokley/cc python manage.py migrate
