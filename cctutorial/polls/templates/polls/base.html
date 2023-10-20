@@ -8,6 +8,12 @@
         <a href="{% url 'polls:choices' %}">Choices</a>
         <a href="{% url 'polls:most-popular-choice' %}">Most Popular Choice</a>
 
+        {% if header %}
+            <h2>
+                {{ header }}
+            </h2>
+        {% endif %}
+
         {% block body %}
         {% endblock %}
     </body>

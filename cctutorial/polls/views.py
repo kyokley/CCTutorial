@@ -36,20 +36,21 @@ def choices(request, pk=None):
 
     Show the related question in both instances
     """
-    questions = {}
+    questions = set()
 
     if pk:
         choice = get_object_or_404(Choice, pk=pk)
-        questions = {choice.question: [choice]}
+        choices = [choice]
         header = f'Choice #{choice.pk}'
     else:
         choices = Choice.objects.all().order_by('pk').select_related('question')
         header = 'All Choices:'
-        for choice in choices:
-            questions.setdefault(choice.question, []).append(choice)
 
+    for choice in choices:
+        questions.add(choice.question)
 
     rendered = render(request, 'polls/choices.html', {'questions': questions,
+                                                      'choices': choices,
                                                       'header': header})
     return rendered
 

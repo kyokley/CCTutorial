@@ -1,0 +1,22 @@
+{% extends "polls/base.html" %}
+
+{% block body %}
+    <ul>
+        {% if questions %}
+            {% for question, choices in questions.items %}
+                <li>
+                    Question: {{ question.pk }} - {{ question.question_text }}
+                    <ul>
+                        {% for choice in choices %}
+                            <li>
+                                Choice: {{ choice.pk }} - {{ choice.choice_text }} Votes: {{ choice.votes }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% endfor %}
+        {% else %}
+            No data to display
+        {% endif %}
+    </ul>
+{% endblock %}

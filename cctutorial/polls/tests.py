@@ -158,6 +158,8 @@ class TestChoices(SeedDataBase):
         Question.objects.all().delete()
         response = client.get(reverse(self.url_name))
         assert response.status_code == 200
+        assert not self.render_spy.call_args.args[2]['questions']
+        assert not self.render_spy.call_args.args[2]['choices']
 
     def test_non_existent_raises_404(self, client):
         max_id = Choice.objects.all().order_by('-pk').values_list('pk', flat=True)[0]
@@ -170,17 +172,25 @@ class TestChoices(SeedDataBase):
         response = client.get(reverse(self.url_name, kwargs=dict(pk=random_choice.pk)))
         assert response.status_code == 200
 
-        assert (
-            self.render_spy.call_args.args[2]['questions'][random_choice.question] ==
-            [random_choice])
+        assert self.render_spy.call_args.args[2]['questions'] == {random_choice.question}
+        assert self.render_spy.call_args.args[2]['choices'] == [random_choice]
 
     def test_get_all_choices(self, client):
         response = client.get(reverse(self.url_name))
         assert response.status_code == 200
 
         assert (
+            set(self.render_spy.call_args.args[2]['choices']) ==
+            set(Choice.objects.all())
+        )
+        assert (
             set(self.render_spy.call_args.args[2]['questions']) ==
             set(Question.objects.all())
+        )
+        # Make sure no duplicate Questions have been sent
+        assert (
+            len(self.render_spy.call_args.args[2]['questions']) ==
+            Question.objects.count()
         )
 
 
