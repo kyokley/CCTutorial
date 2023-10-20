@@ -39,7 +39,10 @@ class PollsTests(TestCase):
         response = self.client.get(reverse('polls:most-popular-choice'))
         self.assertEqual(response.status_code, 200)
 
-
+# After this point, I switched to using pytest because I wanted to be able
+# to assert on the inputs to the `render` function without completely mocking
+# its output. So, below I am using the pytest-mocker spy function to inspect
+# the inputs to `render`.
 class SeedDataBase:
     @pytest.fixture(autouse=True)
     def _seed_data(self):
@@ -53,6 +56,9 @@ class SeedDataBase:
                     question=new_question,
                     choice_text=fake.name())
 
+    @pytest.fixture(autouse=True)
+    def _create_render_spy(self, mocker):
+        self.render_spy = mocker.spy(views, 'render')
 
 
 @pytest.mark.django_db
@@ -61,8 +67,7 @@ class TestIndex(SeedDataBase):
     # and dirty test. A more rigorous test would also comfirm proper ordering.
 
     @pytest.fixture(autouse=True)
-    def setUp(self, mocker):
-        self.render_spy = mocker.spy(views, 'render')
+    def setUp(self):
         self.url_name = 'polls:index'
 
     def test_with_data(self, client):
@@ -84,8 +89,7 @@ class TestIndex(SeedDataBase):
 @pytest.mark.django_db
 class TestMostPopularChoice(SeedDataBase):
     @pytest.fixture(autouse=True)
-    def setUp(self, mocker):
-        self.render_spy = mocker.spy(views, 'render')
+    def setUp(self):
         self.url_name = 'polls:most-popular-choice'
 
     def test_degenerate_case(self, client):
@@ -150,8 +154,7 @@ class TestMostPopularChoice(SeedDataBase):
 @pytest.mark.django_db
 class TestChoices(SeedDataBase):
     @pytest.fixture(autouse=True)
-    def setUp(self, mocker):
-        self.render_spy = mocker.spy(views, 'render')
+    def setUp(self):
         self.url_name = 'polls:choices'
 
     def test_empty(self, client):
@@ -197,8 +200,7 @@ class TestChoices(SeedDataBase):
 @pytest.mark.django_db
 class TestQuestion(SeedDataBase):
     @pytest.fixture(autouse=True)
-    def setUp(self, mocker):
-        self.render_spy = mocker.spy(views, 'render')
+    def setUp(self):
         self.url_name = 'polls:questions'
 
     def test_empty(self, client):
