@@ -35,13 +35,16 @@ class Command(BaseCommand):
         Fix the bug so we get the expected output.
         """
 
-        def manipulate_data(default_list=[], data=None):
+        def manipulate_data(default_list=None, data=None):
             """
             For a given data list, append it to the default list and return the results
             """
+            if default_list is None:
+                default_list = []
 
-            return default_list.append(data)
+            default_list.append(data)
+            return default_list
 
         for i in range(10):
             results = manipulate_data(data=i)
-            print results
+            print(results)
