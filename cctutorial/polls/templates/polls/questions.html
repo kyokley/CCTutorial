@@ -1,0 +1,15 @@
+{% extends "polls/base.html" %}
+
+{% block body %}
+    <ul>
+        {% if questions %}
+            {% for question in questions %}
+                <li>
+                    Question: {{ question.pk }} - {{ question.question_text }} Pub Date: {{ question.pub_date }}
+                </li>
+            {% endfor %}
+        {% else %}
+            No data to display
+        {% endif %}
+    </ul>
+{% endblock %}
