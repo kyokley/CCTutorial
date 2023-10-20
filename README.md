@@ -12,6 +12,8 @@ To run tests, run:
 make tests
 ```
 
+I've included a requirements.txt file as well to allow running the application from the host.
+
 I believe I was able to attempt all of the tasks outlined below except for the one about restricting users to one vote per day. Without taking the next step of adding forms to the various templates, it felt like there was a lot of variability in what an implementation could look like. At a high level though, I would create a solution that assigns some kind of unique identifier to the user's session and track that against each Question and when the vote occurred.
 
 
